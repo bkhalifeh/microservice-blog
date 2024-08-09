@@ -7,7 +7,7 @@ export class HashService {
   private readonly secret: Buffer;
   constructor(configService: ConfigService) {
     this.secret = Buffer.from(
-      String(configService.get<string>('ARGON_SECRET')),
+      String(configService.get<string>('ARGON_SECRET', '12345678')),
     );
   }
 
