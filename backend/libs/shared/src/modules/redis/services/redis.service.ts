@@ -16,11 +16,11 @@ export class RedisService
   constructor(
     @InjectPinoLogger(RedisService.name)
     private readonly logger: PinoLogger,
-    @Inject('CACHE_NAME')
-    cacheName: string,
+    @Inject('REDIS_NAME')
+    redisName: string,
     configService: ConfigService,
   ) {
-    super(configService.get<string>(`CACHE_URL_${cacheName}`, ''), {
+    super(configService.get<string>(`REDIS_URL_${redisName}`, ''), {
       lazyConnect: true,
     });
   }

@@ -7,7 +7,7 @@ services:
     volumes:
       - ./backend:/app
     env_file:
-      - ./backend/.env
+      - ./backend/.env.development.user
     depends_on:
       - user-db
       - nats
@@ -23,10 +23,10 @@ services:
     volumes:
       - user-db-vol:/data/postgres
 
-  user-cache:
+  user-redis:
     image: redis:7.2.5-alpine3.20
     volumes:
-      - user-cache-vol:/data
+      - user-redis-vol:/data
 
   pgadmin:
     image: dpage/pgadmin4:8.4
@@ -56,4 +56,4 @@ services:
 volumes:
   pgadmin:
   user-db-vol:
-  user-cache-vol:
+  user-redis-vol:

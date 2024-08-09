@@ -10,7 +10,7 @@ export class RedisModule {
       providers: [
         {
           useValue: name.toUpperCase(),
-          provide: 'CACHE_NAME',
+          provide: 'REDIS_NAME',
         },
         RedisService,
       ],
