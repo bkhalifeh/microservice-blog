@@ -11,10 +11,18 @@ import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import * as schema from '../../../db/schema';
 import { HashModule } from '../hash/hash.module';
+import Joi from 'joi';
 
 @Module({
   imports: [
-    CommonModule,
+    CommonModule.forRoot({
+      configValidation: Joi.object({
+        DATABASE_URL_USER: Joi.string().uri().required(),
+        REDIS_URL_USER: Joi.string().uri().required(),
+        NATS_SERVER: Joi.string().uri().required(),
+        ARGON_SECRET: Joi.string().min(8).required(),
+      }),
+    }),
     HashModule,
     NatsModule,
     RedisModule.forRoot('user'),
