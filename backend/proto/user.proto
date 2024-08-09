@@ -5,5 +5,5 @@ package proto;
 message UserCreated {
     int32 id = 1;
     string fullName = 2;
-
+    string email = 3;
 }
