@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
-import { LoggerModule } from 'nestjs-pino';
 import {
   CommonModule,
   DrizzleModule,
@@ -12,10 +10,12 @@ import {
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import * as schema from '../../../db/schema';
+import { HashModule } from '../hash/hash.module';
 
 @Module({
   imports: [
     CommonModule,
+    HashModule,
     NatsModule,
     RedisModule.forRoot('user'),
     DrizzleModule.forRoot('user', schema),
