@@ -4,7 +4,7 @@ import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
 
 async function bootstrap() {
-  const listApps = ['user'];
+  const listApps = [process.argv.pop() as string]; //['user'];
   listApps.forEach(async (app) => {
     execSync(
       `pnpm exec drizzle-kit generate --config ./apps/${app}/drizzle.config.ts`,
