@@ -1,0 +1,59 @@
+services:
+  user-srv:
+    build:
+      target: development
+      context: ./backend
+      dockerfile: ./apps/user/Dockerfile
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - user-db
+      - nats
+    command: ["pnpm", "run", "dev", "user"]
+
+  user-db:
+    image: postgres:16.2-alpine3.19
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      PGDATA: /data/postgres
+    volumes:
+      - user-db-vol:/data/postgres
+
+  user-cache:
+    image: redis:7.2.5-alpine3.20
+    volumes:
+      - user-cache-vol:/data
+
+  pgadmin:
+    image: dpage/pgadmin4:8.4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_LISTEN_PORT: 5050
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+  nats:
+    image: nats:2.10.18-alpine3.20
+    container_name: nats_main
+
+  nginx:
+    container_name: nginx
+    image: nginx:stable-alpine3.17
+    ports:
+      - "3000:80"
+    volumes:
+      - ./nginx/nginx.dev.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - pgadmin
+      - user-srv
+
+volumes:
+  pgadmin:
+  user-db-vol:
+  user-cache-vol:
