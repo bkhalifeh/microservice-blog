@@ -21,3 +21,8 @@ export type TUserInsertResult = {
   email: string;
   password: string;
 };
+
+export type TGetTokenInput = {
+  id: number;
+  email: string;
+};

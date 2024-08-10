@@ -1,7 +1,7 @@
-import { tags } from 'typia';
+import { TEmail, TFullName, TStrongPassword } from '../types/validators.type';
 
 export class UserSignUpDto {
-  fullName!: string & tags.MinLength<3> & tags.MaxLength<64>;
-  email!: string & tags.Format<'email'>;
-  password!: string;
+  fullName!: TFullName;
+  email!: TEmail;
+  password!: TStrongPassword;
 }

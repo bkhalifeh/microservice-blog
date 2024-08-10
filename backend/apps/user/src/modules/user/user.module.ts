@@ -1,42 +1,30 @@
 import { Module } from '@nestjs/common';
-import { BullModule } from '@nestjs/bullmq';
-import {
-  CommonModule,
-  DrizzleModule,
-  NatsModule,
-  RedisModule,
-  RedisService,
-} from '@app/shared';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
-import * as schema from '../../../db/schema';
+import { PassportLocalStrategyProvider } from './providers/passport-local-strategy.provider';
+import { PassportModule } from '@nestjs/passport';
 import { HashModule } from '../hash/hash.module';
-import Joi from 'joi';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    CommonModule.forRoot({
-      configValidation: Joi.object({
-        DATABASE_URL_USER: Joi.string().uri().required(),
-        REDIS_URL_USER: Joi.string().uri().required(),
-        NATS_SERVER: Joi.string().uri().required(),
-        ARGON_SECRET: Joi.string().min(8).required(),
-      }),
-    }),
-    HashModule,
-    NatsModule,
-    RedisModule.forRoot('user'),
-    DrizzleModule.forRoot('user', schema),
-    BullModule.forRootAsync({
-      inject: [RedisService],
-      useFactory: (redisService: RedisService) => {
+    PassportModule.register({ session: false }),
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
         return {
-          connection: redisService,
+          global: true,
+          signOptions: {
+            algorithm: 'RS256',
+          },
+          privateKey: configService.get<string>('PRIVATE_KEY', ''),
         };
       },
     }),
+    HashModule,
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, PassportLocalStrategyProvider],
 })
 export class UserModule {}

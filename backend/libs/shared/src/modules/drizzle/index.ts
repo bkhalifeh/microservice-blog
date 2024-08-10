@@ -1,2 +1,3 @@
 export * from './drizzle.module';
-export * from './services/drizzle.service';
+export * from './services';
+export * from './enums';

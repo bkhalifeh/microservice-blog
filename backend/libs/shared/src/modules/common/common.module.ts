@@ -16,6 +16,15 @@ export class CommonModule {
                 colorize: true,
               },
             },
+            serializers: {
+              req: (value) => {
+                return `${value.id} - ${value.method} - ${value.url}`;
+              },
+              res: (value) => {
+                return `${value.statusCode}`;
+              },
+              responseTime: () => {},
+            },
           },
         };
     const configOptions: ConfigModuleOptions = args.config

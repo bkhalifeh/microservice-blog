@@ -1,6 +1,6 @@
-import { tags } from 'typia';
+import { TEmail, TStrongPassword } from '../types/validators.type';
 
 export class UserSignInDto {
-  email!: string & tags.Format<'email'>;
-  password!: string;
+  email!: TEmail;
+  password!: TStrongPassword;
 }

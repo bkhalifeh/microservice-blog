@@ -34,11 +34,11 @@ export class DrizzleService<T extends Record<string, unknown>>
       {
         max: 1,
         debug: true,
-        onclose: (connId: number) => {},
       },
     );
     this.db = drizzle(this.client, {
       schema: this.schema,
+      logger: true,
     });
   }
 
