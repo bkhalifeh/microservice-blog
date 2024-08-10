@@ -26,3 +26,16 @@ export type TGetTokenInput = {
   id: number;
   email: string;
 };
+
+export type TFindOneInput = {
+  userId: number;
+};
+
+export type TUserSelectResult = {
+  id: number;
+  fullName: string;
+  email: string;
+  password: string;
+  postCount: number;
+  commentCount: number;
+};

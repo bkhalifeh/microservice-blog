@@ -1,5 +1,5 @@
 {
-  "id": "098eab57-3502-47c5-9efc-423a23be5e12",
+  "id": "74e27326-ca3e-42bf-8f88-ca9b244ecd01",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -16,12 +16,6 @@
         },
         "title": {
           "name": "title",
-          "type": "varchar(128)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "slug": {
-          "name": "slug",
           "type": "varchar(128)",
           "primaryKey": false,
           "notNull": true
@@ -61,21 +55,6 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
-        },
-        "slug_idx": {
-          "name": "slug_idx",
-          "columns": [
-            {
-              "expression": "slug",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
         }
       },
       "foreignKeys": {
@@ -94,15 +73,7 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "posts_slug_unique": {
-          "name": "posts_slug_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
-        }
-      }
+      "uniqueConstraints": {}
     },
     "public.users": {
       "name": "users",

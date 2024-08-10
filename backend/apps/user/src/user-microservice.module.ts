@@ -13,6 +13,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import * as schema from '../db/schema';
 import { UserModule } from './modules/user/user.module';
+import { PostModule } from './modules/post/post.module';
+import { CommentModule } from './modules/comment/comment.module';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { UserModule } from './modules/user/user.module';
       },
     }),
     UserModule,
+    PostModule,
+    CommentModule,
   ],
 })
 export class UserMicroServiceModule {}

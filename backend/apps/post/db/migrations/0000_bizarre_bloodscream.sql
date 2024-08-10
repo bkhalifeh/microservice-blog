@@ -1,11 +1,9 @@
 CREATE TABLE IF NOT EXISTS "posts" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"title" varchar(128) NOT NULL,
-	"slug" varchar(128) NOT NULL,
 	"content" text NOT NULL,
 	"author_id" integer NOT NULL,
-	"comment_count" integer DEFAULT 0 NOT NULL,
-	CONSTRAINT "posts_slug_unique" UNIQUE("slug")
+	"comment_count" integer DEFAULT 0 NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
@@ -19,5 +17,4 @@ EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "author_idx" ON "posts" USING btree ("author_id");--> statement-breakpoint
-CREATE UNIQUE INDEX IF NOT EXISTS "slug_idx" ON "posts" USING btree ("slug");
+CREATE INDEX IF NOT EXISTS "author_idx" ON "posts" USING btree ("author_id");

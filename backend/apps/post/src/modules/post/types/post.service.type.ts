@@ -20,3 +20,11 @@ export type TFindInput = {
 export type TFindOneInput = {
   id: number;
 };
+
+export type TPostInsertResult = {
+  id: number;
+  title: string;
+  content: string;
+  authorId: number;
+  commentCount: number;
+};

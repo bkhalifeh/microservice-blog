@@ -25,7 +25,6 @@ export const posts = pgTable(
   {
     id: serial('id').primaryKey(),
     title: varchar('title', { length: 128 }).notNull(),
-    slug: varchar('slug', { length: 128 }).notNull().unique(),
     content: text('content').notNull(),
     authorId: integer('author_id')
       .notNull()
@@ -35,7 +34,6 @@ export const posts = pgTable(
   (table) => {
     return {
       authorIdx: index('author_idx').on(table.authorId),
-      slugIdx: uniqueIndex('slug_idx').on(table.slug),
     };
   },
 );

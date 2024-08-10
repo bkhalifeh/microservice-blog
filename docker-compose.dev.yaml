@@ -29,6 +29,21 @@ services:
       - nats
     command: ["pnpm", "run", "dev", "post"]
 
+  comment-srv:
+    build:
+      target: development
+      context: ./backend
+      dockerfile: ./apps/comment/Dockerfile
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env.development.comment
+    depends_on:
+      - postgres-db
+      - redis-cache
+      - nats
+    command: ["pnpm", "run", "dev", "comment"]
+
   redis-cache:
     image: redis:7.2.5-alpine3.20
     volumes:
@@ -37,7 +52,7 @@ services:
   postgres-db:
     image: postgres:16.2-alpine3.19
     environment:
-      POSTGRES_MULTIPLE_DATABASES: user_db,post_db
+      POSTGRES_MULTIPLE_DATABASES: user_db,post_db,comment_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       PGDATA: /data/postgres
@@ -69,6 +84,8 @@ services:
     depends_on:
       - pgadmin
       - user-srv
+      - post-srv
+      - comment-srv
 
 volumes:
   pgadmin:

@@ -4,7 +4,6 @@ import { UserService } from '../services/user.service';
 import { pb } from '@app/shared';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { TypedParam, TypedRoute } from '@nestia/core';
-import { PostService } from '../../post/services/post.service';
 import { tags } from 'typia';
 
 @Controller('user')
@@ -22,8 +21,8 @@ export class UserController {
   }
 
   @EventPattern('UserCreated')
-  create(data: pb.UserCreated) {
-    this.logger.info({ data }, 'create');
+  handleUserCreated(data: pb.UserCreated) {
+    this.logger.info({ data }, 'handleUserCreated');
     this.userService.create({ userCreated: data });
   }
 }

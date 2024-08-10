@@ -12,6 +12,7 @@ import { PostModule } from './modules/post/post.module';
 import { UserModule } from './modules/user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { PassportJwtStrategyProvider } from '@app/shared/modules/authentication/providers/passport-jwt-strategy.provider';
+import { CommentModule } from './modules/comment/comment.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PassportJwtStrategyProvider } from '@app/shared/modules/authentication/
     PassportModule.register({ session: false }),
     PostModule,
     UserModule,
+    CommentModule,
   ],
   providers: [PassportJwtStrategyProvider],
 })
