@@ -1,243 +1,87 @@
----
-title: microservice-blog
-language_tabs:
-  - shell: Shell
-  - http: HTTP
-  - javascript: JavaScript
-  - ruby: Ruby
-  - python: Python
-  - php: PHP
-  - java: Java
-  - go: Go
-toc_footers: []
-includes: []
-search: true
-code_clipboard: true
-highlight_theme: darkula
-headingLevel: 2
-generator: "@tarslib/widdershins v4.0.23"
----
-
 # microservice-blog
 
-Base URLs:
+## Description
 
-# Authentication
+This project is a simple blog platform developed using the NestJS framework. It leverages microservice and event-driven architecture to ensure scalability, flexibility, and efficient communication between different components. The architecture is designed to handle various aspects of a blog, such as post creation, comment management, and user interaction, through distinct microservices that communicate via events. This setup allows for seamless integration, improved performance, and ease of maintenance.
+
+Key features include:
+- **Microservice Architecture**: Each core functionality (e.g., posts, comments) is handled by a dedicated microservice, promoting modularity and scalability.
+- **Event-Driven Communication**: The microservices communicate through events, ensuring loose coupling and asynchronous processing.
+- **NestJS Framework**: Utilizes NestJS for building scalable and maintainable server-side applications with TypeScript.
+
+## Authentication
 
 - HTTP Authentication, scheme: bearer
 
-# post
 
-## POST create
+## User Service
 
-POST /api/v1/post
-
-> Response Examples
-
-> 200 Response
-
-```json
-{}
-```
-
-### Responses
-
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
-
-### Responses Data Schema
-
-## GET list
-
-GET /api/v1/post
-
-> Response Examples
-
-> 200 Response
-
-```json
-{}
-```
-
-### Responses
-
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
-
-### Responses Data Schema
-
-## GET user-posts
-
-GET /api/v1/user/11/post
-
-> Response Examples
-
-> 200 Response
-
-```json
-{}
-```
-
-### Responses
-
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
-
-### Responses Data Schema
-
-## GET single-post
-
-GET /api/v1/post/9
-
-> Response Examples
-
-> 200 Response
-
-```json
-{}
-```
-
-### Responses
-
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
-
-### Responses Data Schema
-
-# user
-
-## POST sign-up
+### User signs up.
 
 POST /api/v1/user/sign-up
 
-> Body Parameters
-
-```json
-{}
-```
-
-### Params
-
-| Name | Location | Type   | Required | Description |
-| ---- | -------- | ------ | -------- | ----------- |
-| body | body     | object | no       | none        |
-
-> Response Examples
-
-> 200 Response
-
-```json
-{}
-```
-
-### Responses
-
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
-
-### Responses Data Schema
-
-## POST sign-in
-
-POST /api/v1/user/sign-in
-
-> Body Parameters
-
 ```json
 {
-  "email": ""
+    "fullName": "behzad khalifeh",
+    "email": "behzadkh80w@gmail.com",
+    "password": "Behzad@Kh80"
 }
 ```
 
-### Params
+### User signs in.
 
-| Name       | Location | Type   | Required | Description |
-| ---------- | -------- | ------ | -------- | ----------- |
-| body       | body     | object | no       | none        |
-| » email    | body     | string | yes      | none        |
-| » password | body     | string | yes      | none        |
-
-> Response Examples
-
-> 200 Response
+POST /api/v1/user/sign-in
 
 ```json
-{}
+{
+    "email": "bkhalifeh@protonmail.com",
+    "password": "Behzad@Kh80"
+}
 ```
 
-### Responses
-
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
-
-### Responses Data Schema
-
-## GET info
+### Get information about the user.
 
 GET /api/v1/user
 
-> Response Examples
 
-> 200 Response
+## Post Service
 
-```json
-{}
-```
+### Create a new post.
 
-### Responses
-
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
-
-### Responses Data Schema
-
-# comment
-
-## GET list
-
-GET /api/v1/post/1/comment
-
-> Response Examples
-
-> 200 Response
+POST /api/v1/post
 
 ```json
-{}
+{
+    "title": "microservice",
+    "content": "Hello World!"
+}
 ```
 
-### Responses
+### Get a list of all posts.
 
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
+GET /api/v1/post
 
-### Responses Data Schema
+### Get a list of all posts authored by a specific user.
 
-## POST create
+GET /api/v1/user/:userId/post
+
+### Get all information about the post.
+
+GET /api/v1/post/:postId
+
+## Comment Service
+
+### Get a list of comments on the post.
+
+GET /api/v1/post/:postId/comment
+
+### Add a new comment to the post.
 
 POST /api/v1/post/10/comment
 
-> Response Examples
-
-> 200 Response
-
 ```json
-{}
+{
+    "content": "Woow"
+}
 ```
 
-### Responses
-
-| HTTP Status Code | Meaning                                                 | Description | Data schema |
-| ---------------- | ------------------------------------------------------- | ----------- | ----------- |
-| 200              | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | Success     | Inline      |
-
-### Responses Data Schema
-
-# Data Schema
