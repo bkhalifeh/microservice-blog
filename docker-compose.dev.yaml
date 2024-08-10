@@ -9,24 +9,41 @@ services:
     env_file:
       - ./backend/.env.development.user
     depends_on:
-      - user-db
+      - postgres-db
+      - redis-cache
       - nats
     command: ["pnpm", "run", "dev", "user"]
 
-  user-db:
+  post-srv:
+    build:
+      target: development
+      context: ./backend
+      dockerfile: ./apps/post/Dockerfile
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env.development.post
+    depends_on:
+      - postgres-db
+      - redis-cache
+      - nats
+    command: ["pnpm", "run", "dev", "post"]
+
+  redis-cache:
+    image: redis:7.2.5-alpine3.20
+    volumes:
+      - redis-cache-vol:/data
+
+  postgres-db:
     image: postgres:16.2-alpine3.19
     environment:
-      POSTGRES_DB: user_db
+      POSTGRES_MULTIPLE_DATABASES: user_db,post_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       PGDATA: /data/postgres
     volumes:
-      - user-db-vol:/data/postgres
-
-  user-redis:
-    image: redis:7.2.5-alpine3.20
-    volumes:
-      - user-redis-vol:/data
+      - ./postgres:/docker-entrypoint-initdb.d
+      - postgres-db-vol:/data/postgres
 
   pgadmin:
     image: dpage/pgadmin4:8.4
@@ -55,5 +72,5 @@ services:
 
 volumes:
   pgadmin:
-  user-db-vol:
-  user-redis-vol:
+  postgres-db-vol:
+  redis-cache-vol:
