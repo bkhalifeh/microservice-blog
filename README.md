@@ -23,7 +23,7 @@ POST /api/v1/user/sign-up
 ```json
 {
     "fullName": "behzad khalifeh",
-    "email": "behzadkh80w@gmail.com",
+    "email": "bkhalifeh@protonmail.com",
     "password": "Behzad@Kh80"
 }
 ```
